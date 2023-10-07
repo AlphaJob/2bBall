@@ -1,8 +1,8 @@
-
+import { _decorator, EventTarget, Node } from 'cc';
 export class FEvent {
-    private static _inst: cc.EventTarget;
+    private static _inst: EventTarget;
     static get inst() {
-        if (!FEvent._inst) FEvent._inst = new cc.EventTarget();
+        if (!FEvent._inst) FEvent._inst = new EventTarget();
         return FEvent._inst;
     }
 
@@ -16,7 +16,7 @@ export class FEvent {
      * @param listener	事件侦听函数。
      * @return 此 EventDispatcher 对象。
      */
-    static on(type: string, listener:Function) {
+    static on(type: string, listener: (...args: any[]) => void) {
         return FEvent.inst.on(type, listener);
     }
 
@@ -26,7 +26,7 @@ export class FEvent {
      * @param listener	事件侦听函数。
      * @return 此 EventDispatcher 对象。
      */
-    static off(type: string, listener:Function) {
+    static off(type: string, listener: (...args: any[]) => void) {
         return FEvent.inst.off(type, listener);
     }
 

@@ -1,5 +1,3 @@
-import { ServerAction } from "../net/ServerAction";
-
 export class GameConfig {
     static soundOn: boolean = true;
     static musicon: boolean = true;
