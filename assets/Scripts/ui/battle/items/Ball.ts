@@ -24,7 +24,7 @@ export class Ball {
     private color;
     private radius;
     private status: BallStatus;
-    constructor({ id, x, y, dir, dist, collide, role, color = 0, interLen }) {
+    constructor({ id, x, y, dir, dist, collide = null, role = null, color = 0, interLen = 0 }) {
         this.id = id;
         this.x = x;
         this.y = y;

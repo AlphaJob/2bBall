@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, NodeEventType } from 'cc';
 import { FEvent } from './utils/FEvent';
+import { BattleManager } from './ui/battle/BattleManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerController')
@@ -22,6 +23,7 @@ export class PlayerController extends Component {
 
     onTest(...args:any[]) {
         console.log('onTest:', args)
+        BattleManager.instance.init();
     }
 }
 

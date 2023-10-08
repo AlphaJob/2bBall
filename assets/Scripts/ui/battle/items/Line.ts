@@ -5,7 +5,7 @@ export class Line {
     private y1;
     private x2;
     private y2;
-    private solid;
+    solid;
     private mid;
     private hide;
     hideLines = [];

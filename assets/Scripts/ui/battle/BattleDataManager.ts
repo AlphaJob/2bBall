@@ -1,4 +1,3 @@
-import { GameConfig } from "../../utils/GameConfig";
 import { BattleConfig } from "./BattleConfig";
 import { Ball } from "./items/Ball";
 import { Line } from "./items/Line";

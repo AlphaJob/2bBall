@@ -2,7 +2,6 @@ import { BattleDataManager } from "../BattleDataManager";
 import { Vector } from "./Vector";
 
 export class Collide {
-
     static resetIgnore(start, ignores, collide, finish = false) {
         let temp = [];
         // 任何情况，本次碰撞线加入下次碰撞检测的忽略组中

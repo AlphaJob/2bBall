@@ -182,7 +182,7 @@
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 492.4297520661157,
+    "_orthoHeight": 568,
     "_near": 0,
     "_far": 1000,
     "_color": {
@@ -242,8 +242,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": 190.672,
+      "y": 5,
       "z": 0
     },
     "_lrot": {
@@ -272,7 +272,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Label",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 5
@@ -788,7 +788,7 @@
     "_id": "c5V1EV8IpMtrIvY1OE9t2u"
   },
   {
-    "__type__": "a7f43ps6D1NtJ3hoPd78cxS",
+    "__type__": "5ff43R3Z/9PVrkYaBye0Asm",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -797,7 +797,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "_id": "aeK8CKSyFPGbzE9l2H4g4P"
+    "_id": "07W6ZJvsRKX6a8m14WRXZW"
   },
   {
     "__type__": "cc.SceneGlobals",

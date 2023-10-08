@@ -1,5 +1,8 @@
+import {  JsonAsset} from "cc"
 import { Line } from "./items/Line"
 import { Vector } from "./util/Vector"
+import { GameAssetManager } from "../../utils/GameAssetManager"
+import { Help } from "./util/Help"
 
 export class BattleConfig {
     static CmdType = {
@@ -83,6 +86,7 @@ export class BattleConfig {
     }
 
     static config = {
+        stage_monsters: null,
         enemys: [],
 
         objects: null,
@@ -101,56 +105,58 @@ export class BattleConfig {
     };
 
     static loadData(onfinish) {
-        //TODO: 加载配置文件， 并赋值
+        // 加载配置文件， 并赋值
+        GameAssetManager.instance.loadBundleAllAsset('resources', (finish, total, item) => {
+            console.log('loading……' + Math.floor(100 * finish / total) + '%');
+        }, (err, res) => {
+            console.log('GameUI bundle loadDir complete');
 
-        //     $.getJSON("data/object.json", static(obj_data) {
-        //         var objects = obj_data;
-        //         config.objects = objects;
-        //         for(let k in config.objects) {
-        //         let obj = config.objects[k];
-        //         obj.size = obj.anchor.x * 2 / Board.SIDE;
-        //     }
-        //     $.getJSON("data/monster.json", static(mst_data) {
-        //         var monsters = mst_data;
-        //         config.monsters = monsters;
+            GameAssetManager.instance.getBundleAsset('resources', 'config/object').then((res: JsonAsset) => {
+                BattleConfig.config.objects = res.json;
+                for (let k in BattleConfig.config.objects) {
+                    let obj = BattleConfig.config.objects[k];
+                    obj.size = obj.anchor.x * 2 / BattleConfig.Board.SIDE;
+                }
+                GameAssetManager.instance.getBundleAsset('resources', 'config/monster').then((res:JsonAsset) => {
+                    BattleConfig.config.monsters = res.json;
 
-        //         $.getJSON("data/role.json", static(role_data) {
-        //             config.roles = role_data;
+                    GameAssetManager.instance.getBundleAsset('resources', 'config/role').then((res:JsonAsset) => {
+                        BattleConfig.config.roles = res.json;
 
-        //             $.getJSON("data/stage.json", static(stage_data) {
-        //                 var stage = stage_data;
-        //                 config.stage = stage;
-        //                 config.stage_monsters = {}
-        //                     for(let m of stage.monsters) {
-        //             config.stage_monsters[m.id] = m;
-        //             let mc = getMonster(m.cid);
-        //             if(mc == null) {
-        //         console.log("not find monster " + m.cid);
-        //         continue;
-        //     }
-        //                         let obj = objects[mc.type];
-        //     if (!m.point) {
-        //         m.point = getPointByGrid(obj, m.grid);
-        //     }
+                        GameAssetManager.instance.getBundleAsset('resources', 'config/stage').then((res:JsonAsset) => {
+                            BattleConfig.config.stage = res.json;
+                            BattleConfig.config.stage_monsters = {}
+                            for (let m of BattleConfig.config.stage.monsters) {
+                                BattleConfig.config.stage_monsters[m.id] = m;
+                                let mc = BattleConfig.getMonster(m.cid);
+                                if (mc == null) {
+                                    console.log("not find monster " + m.cid);
+                                    continue;
+                                }
+                                let obj = BattleConfig.config.objects[mc.type];
+                                if (!m.point) {
+                                    m.point = Help.getPointByGrid(obj, m.grid);
+                                }
 
-        //     let lines = makeLines(m.id, m.point, obj, mc.solid);
-        //     config.enemys.push({
-        //         id: m.id,
-        //         point: m.point,
-        //         grid: m.grid,
-        //         hp: mc.hp,
-        //         solid: mc.solid,
-        //         evt: mc.evt,
-        //         obj: obj,
-        //         lines: lines,
-        //         rect: makeRect(lines)
-        //     });
-        // }
-        //     onfinish();
-        // });
-        //                 });
-        //             });
-        //         });
+                                let lines = Line.makeLines(m.id, m.point, obj, mc.solid);
+                                BattleConfig.config.enemys.push({
+                                    id: m.id,
+                                    point: m.point,
+                                    grid: m.grid,
+                                    hp: mc.hp,
+                                    solid: mc.solid,
+                                    evt: mc.evt,
+                                    obj: obj,
+                                    lines: lines,
+                                    rect: Help.makeRect(lines)
+                                });
+                            }
+                            onfinish();
+                        });
+                    });  
+                });
+            }); 
+        });
     }
 
     static copyEnemies(enemys) {
