@@ -41,10 +41,10 @@ export class BattleManager {
             //逻辑
             BattleDataManager.instance.initLogic(this.base, this.distInterval, this.roles);
             //显示
-            // initRender(BattleDataManager.instance.ldata.lines,  this.status,  this.base,  this.collisions,  this.roles);
+            BattleRenderManager.instance.initRender(BattleDataManager.instance.ldata.lines, this.status, this.base, this.collisions, this.roles);
             // }
 
-            // draw();
+            BattleRenderManager.instance.draw();
             // addUIEvents();
 
         });
@@ -89,26 +89,26 @@ export class BattleManager {
     loadBalls() {
         let cmd = this.cmds.shift();
         while (cmd.type == BattleConfig.CmdType.CREATE_BALL) {
-            let role =  this.roles[cmd.cid - 1];
+            let role = this.roles[cmd.cid - 1];
             let ball = new Ball({
                 id: cmd.bid,
-                x:  this.base.x,
-                y:  this.base.y,
+                x: this.base.x,
+                y: this.base.y,
                 color: role.color,
                 dir: { x: cmd.dir.x, y: cmd.dir.y },
                 dist: 0
             });
             BattleRenderManager.instance.balls.push(ball);
-            cmd =  this.cmds.shift();
+            cmd = this.cmds.shift();
         }
         this.running = cmd;
     }
 
     updatePush() {
-        let totalPush =  this.running.line * BattleConfig.Board.SIDE;
+        let totalPush = this.running.line * BattleConfig.Board.SIDE;
         let pushPixel = 8;
         if (BattleRenderManager.instance.lines.length > 3) {
-             this.pushed += pushPixel;
+            this.pushed += pushPixel;
 
             let temp = [];
             for (let i = 0; i < 3; i++) {
@@ -127,10 +127,10 @@ export class BattleManager {
 
             BattleRenderManager.instance.draw();
         } else {
-             this.pushed = totalPush;
+            this.pushed = totalPush;
         }
 
-        if ( this.pushed >= totalPush) {
+        if (this.pushed >= totalPush) {
             console.log("push finish!");
             // if ( this.isRemote) {
             //     //pushDataMap( this,  this.running.line);
@@ -146,9 +146,9 @@ export class BattleManager {
             //     }
             //     setLines( this.lines);
             // } else {
-                BattleRenderManager.instance.setLines(BattleDataManager.instance.ldata.lines);
+            BattleRenderManager.instance.setLines(BattleDataManager.instance.ldata.lines);
             // }
-             this.running =  this.cmds.shift();
+            this.running = this.cmds.shift();
             this.onfinish();
         }
     }
@@ -268,8 +268,8 @@ export class BattleManager {
                 //     replayJson = JSON.stringify(res.data);
                 //     console.log(replayJson);
                 // } else {
-                    replayJson = JSON.stringify(BattleDataManager.instance.ldata.ops);
-                    console.log(replayJson);
+                replayJson = JSON.stringify(BattleDataManager.instance.ldata.ops);
+                console.log(replayJson);
                 // }
 
                 if (!this.isPlayReplay) {
@@ -499,9 +499,9 @@ export class BattleManager {
         //     }
         //     this.cmds = res.data;
         // } else {
-            BattleDataManager.instance.startRound(this.aimDir);
-            BattleDataManager.instance.updateRound();
-            this.cmds = BattleDataManager.instance.ldata.cmds;
+        BattleDataManager.instance.startRound(this.aimDir);
+        BattleDataManager.instance.updateRound();
+        this.cmds = BattleDataManager.instance.ldata.cmds;
         // }
         //console.log(objToString(this.cmds));
         return true;
@@ -525,8 +525,8 @@ export class BattleManager {
         //         this.through = true;
         //     }
         // } else {
-            BattleDataManager.instance.useSkill(role, target);
-            this.cmds = BattleDataManager.instance.ldata.cmds;
+        BattleDataManager.instance.useSkill(role, target);
+        this.cmds = BattleDataManager.instance.ldata.cmds;
         // }
 
         console.log((this.cmds).toString());

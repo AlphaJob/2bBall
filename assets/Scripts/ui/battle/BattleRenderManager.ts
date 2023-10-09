@@ -17,7 +17,7 @@ export class BattleRenderManager {
     skillRange = {};
     skillRoles = [0, 0, 0, 0, 0];
     skillReadys = {};
-    status:GameState = GameState.GS_SKILL;
+    status: GameState = GameState.GS_SKILL;
     baseLine = null;
     base = null;
     collisions = [];
@@ -26,15 +26,15 @@ export class BattleRenderManager {
 
     initRender(lines, status, base, collisions, roles) {
         this.setLines(lines);
-          this.status = status;
-          this.base = base;
-          this.collisions = collisions;
-          this.baseLine = { x1: 0, y1: base.y, x2: BattleConfig.Canvas.width, y2: base.y, color: "#aaaaaa", width: 1 }
-          this.roles = roles;
+        this.status = status;
+        this.base = base;
+        this.collisions = collisions;
+        this.baseLine = { x1: 0, y1: base.y, x2: BattleConfig.Canvas.width, y2: base.y, color: "#aaaaaa", width: 1 }
+        this.roles = roles;
     }
 
     setLines(lines) {
-          this.lines.length = 0;
+        this.lines.length = 0;
         for (let l of lines) {
             let line = Help.copyLine(l);
             if (line.solid) {
@@ -42,7 +42,7 @@ export class BattleRenderManager {
             } else {
                 line.setColor(BattleConfig.ColorSet.LineDash);
             }
-              this.lines.push(line);
+            this.lines.push(line);
         }
     }
 
@@ -57,16 +57,16 @@ export class BattleRenderManager {
                 color: "rgba(255, 97, 97, 0.5)"
             });
         }
-          this.skillRange[cid] = skillRanges;
+        this.skillRange[cid] = skillRanges;
     }
 
     removeSkillRange(cid) {
-        delete   this.skillRange[cid];
+        delete this.skillRange[cid];
     }
 
     resetSkillRoles() {
-        for (let i = 0; i <   this.skillRoles.length; i++) {
-              this.skillRoles[i] = 0;
+        for (let i = 0; i < this.skillRoles.length; i++) {
+            this.skillRoles[i] = 0;
         }
     }
 
@@ -81,57 +81,59 @@ export class BattleRenderManager {
                 color: "rgba(97, 97, 255, 0.5)"
             });
         }
-          this.skillReadys[cid] = readys;
+        this.skillReadys[cid] = readys;
     }
 
     removeSkillReady(cid) {
-        delete   this.skillReadys[cid];
+        delete this.skillReadys[cid];
     }
 
+    //  gameCanvas = document.getElementById("scene");
+    //  gameCtx = this.gameCanvas.getContext("2d");
     draw() {
-        let gameCtx:any ;
+        let gameCtx: any;
         gameCtx.clearRect(0, 0, BattleConfig.Canvas.width, BattleConfig.Canvas.height);
 
-        this.drawDashLine(gameCtx,   this.baseLine);
+        this.drawDashLine(gameCtx, this.baseLine);
 
-        for (let i = 0; i <   this.roles.length; i++) {
-            this.drawRole(gameCtx, { x: i * 80 + 10, y:   this.base.y + 60, width: 60, height: 80, color:   this.roles[i].color, border:   this.skillRoles[i] != 0 });
+        for (let i = 0; i < this.roles.length; i++) {
+            this.drawRole(gameCtx, { x: i * 80 + 10, y: this.base.y + 60, width: 60, height: 80, color: this.roles[i].color, border: this.skillRoles[i] != 0 });
         }
 
-        for (let l of   this.lines) {
+        for (let l of this.lines) {
             this.drawLine(gameCtx, l);
             for (let sl of l.hideLines) {
                 this.drawLine(gameCtx, sl);
             }
-          this.drawNormal(gameCtx, l);
+            this.drawNormal(gameCtx, l);
         }
 
-        for (let cid in   this.skillRange) {
-            let ranges =   this.skillRange[cid];
+        for (let cid in this.skillRange) {
+            let ranges = this.skillRange[cid];
             for (let r of ranges)
                 this.drawRange(gameCtx, r);
         }
 
-        for (let cid in   this.skillReadys) {
-            let ranges =   this.skillReadys[cid];
+        for (let cid in this.skillReadys) {
+            let ranges = this.skillReadys[cid];
             for (let r of ranges)
                 this.drawRange(gameCtx, r);
         }
 
-        for (let ball of   this.balls) {
+        for (let ball of this.balls) {
             // 起点或者消失的球不画
             if (ball.status != BallStatus.CREATING && ball.status != BallStatus.DESTROY && ball.y < BattleConfig.Board.HEIGHT * BattleConfig.Board.SIDE + 24) {
                 this.drawBall(gameCtx, ball);
             }
         }
 
-        if (  this.status == GameState.GS_AIM) {
-            this.drawBall(gameCtx, { x:   this.base.x, y:   this.base.y, radius: 5, color: "#ac2234" });
-            if (  this.collisions.length > 0) {
-                let start =   this.base;
-                for (let i = 0; i <   this.collisions.length; i++) {
-                    this.drawBall(gameCtx,   this.collisions[i]);
-                    let end =   this.collisions[i];
+        if (this.status == GameState.GS_AIM) {
+            this.drawBall(gameCtx, { x: this.base.x, y: this.base.y, radius: 5, color: "#ac2234" });
+            if (this.collisions.length > 0) {
+                let start = this.base;
+                for (let i = 0; i < this.collisions.length; i++) {
+                    this.drawBall(gameCtx, this.collisions[i]);
+                    let end = this.collisions[i];
                     this.drawDashLine(gameCtx, {
                         x1: start.x,
                         y1: start.y,
@@ -142,21 +144,21 @@ export class BattleRenderManager {
                     });
                     start = end;
                 }
-            } else if (  this.begin != null) {
+            } else if (this.begin != null) {
                 let target = {
-                    x:   this.base.x +   this.begin.x * 1400,
-                    y:   this.base.y +   this.begin.y * 1400
+                    x: this.base.x + this.begin.x * 1400,
+                    y: this.base.y + this.begin.y * 1400
                 }
                 this.drawDashLine(gameCtx, {
-                    x1:   this.base.x,
-                    y1:   this.base.y,
+                    x1: this.base.x,
+                    y1: this.base.y,
                     x2: target.x,
                     y2: target.y,
                     color: "gray",
                     width: 1
                 });
             }
-        } else if (  this.status == GameState.GS_FINISH) {
+        } else if (this.status == GameState.GS_FINISH) {
             gameCtx.font = 'bold 60px 微软雅黑';
             var grandient = gameCtx.createLinearGradient(0, 0, BattleConfig.Canvas.width, 0);
             grandient.addColorStop('0', "magenta");
@@ -164,16 +166,16 @@ export class BattleRenderManager {
             grandient.addColorStop('1.0', 'red');
             //用渐变填色
             gameCtx.fillStyle = grandient;
-            gameCtx.fillText('赢   了', BattleConfig.Canvas.width / 2 - 100,BattleConfig.Canvas.height / 2 - 10);
-        } else if (  this.status == GameState.GS_SKILL) {
-            if (  this.skillSelect) {
-                  this.skillSelect.color = "rgba(49, 194, 238, 0.5)";
-                this.drawRange(gameCtx,   this.skillSelect);
+            gameCtx.fillText('赢   了', BattleConfig.Canvas.width / 2 - 100, BattleConfig.Canvas.height / 2 - 10);
+        } else if (this.status == GameState.GS_SKILL) {
+            if (this.skillSelect) {
+                this.skillSelect.color = "rgba(49, 194, 238, 0.5)";
+                this.drawRange(gameCtx, this.skillSelect);
             }
         }
     }
 
-    drawBall(ctx, { x, y, radius, color, dir = {x:0,y:0} }) {
+    drawBall(ctx, { x, y, radius, color, dir = { x: 0, y: 0 } }) {
         ctx.beginPath();
         ctx.fillStyle = color;
         ctx.arc(x, y, radius, 0, 2 * Math.PI);

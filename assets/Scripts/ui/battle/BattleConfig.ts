@@ -1,4 +1,4 @@
-import {  JsonAsset} from "cc"
+import { JsonAsset } from "cc"
 import { Line } from "./items/Line"
 import { Vector } from "./util/Vector"
 import { GameAssetManager } from "../../utils/GameAssetManager"
@@ -117,13 +117,13 @@ export class BattleConfig {
                     let obj = BattleConfig.config.objects[k];
                     obj.size = obj.anchor.x * 2 / BattleConfig.Board.SIDE;
                 }
-                GameAssetManager.instance.getBundleAsset('resources', 'config/monster').then((res:JsonAsset) => {
+                GameAssetManager.instance.getBundleAsset('resources', 'config/monster').then((res: JsonAsset) => {
                     BattleConfig.config.monsters = res.json;
 
-                    GameAssetManager.instance.getBundleAsset('resources', 'config/role').then((res:JsonAsset) => {
+                    GameAssetManager.instance.getBundleAsset('resources', 'config/role').then((res: JsonAsset) => {
                         BattleConfig.config.roles = res.json;
 
-                        GameAssetManager.instance.getBundleAsset('resources', 'config/stage').then((res:JsonAsset) => {
+                        GameAssetManager.instance.getBundleAsset('resources', 'config/stage').then((res: JsonAsset) => {
                             BattleConfig.config.stage = res.json;
                             BattleConfig.config.stage_monsters = {}
                             for (let m of BattleConfig.config.stage.monsters) {
@@ -153,9 +153,9 @@ export class BattleConfig {
                             }
                             onfinish();
                         });
-                    });  
+                    });
                 });
-            }); 
+            });
         });
     }
 

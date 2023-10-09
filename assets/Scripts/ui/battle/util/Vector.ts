@@ -104,7 +104,6 @@ export class Vector {
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-
     static reflectVector(incident, normal) {
         let dt = Vector.dot(incident, normal);
         let r = {
