@@ -1,13 +1,15 @@
+import { UiBall } from "../../items/UiBall";
 import { BallStatus } from "../BattleConstant";
 import { BattleDataManager } from "../BattleDataManager";
 import { Collide } from "../util/Collide";
 import { Vector } from "../util/Vector";
 
 export class Ball {
-    private id;
+    uiBall:UiBall = null;
+    id;
     private x;
     private y;
-    private dir;
+    dir;
     private role;
 
     private collide;
@@ -49,7 +51,7 @@ export class Ball {
 
     getPos() {
         // 计算新的碰撞时，球可能已经移动的了一段距离，逻辑部分不会实时改变球的坐标，所以需要重新计算当前位置，这部分可以考虑每次直接把球的当前点算出来
-        let pos = {x: this.x + this.dir.x * this.passed, y: this.y + this.dir.y * this.passed};
+        let pos = { x: this.x + this.dir.x * this.passed, y: this.y + this.dir.y * this.passed };
         // 首次碰撞，需要将前置等待时间减去
         if (this.ctimes == 0) {
             pos.x -= this.interLen * this.dir.x;
@@ -61,7 +63,7 @@ export class Ball {
     saveState() {
         this.oldState.hit = this.hit;
         if (this.collide && this.collide.point) {
-            this.oldState.collide = { 
+            this.oldState.collide = {
                 point: Vector.copyPoint(this.collide.point),
                 line: this.collide.line
             };
@@ -105,7 +107,7 @@ export class Ball {
         // 虚线物体或者当前为穿透球，需要记录正在那个敌方体内，再次碰撞其他物体前不会反复计算碰撞伤害
         this.hit = Collide.lgetHitId(this.collide);
         if (this.collide.point != null) {
-            this.dist = Vector.distance({x:collide.point.x - this.x, y:collide.point.y - this.y});
+            this.dist = Vector.distance({ x: collide.point.x - this.x, y: collide.point.y - this.y });
             if (this.ctimes == 0) {
                 // 还未第一次触发弹射的球，因为目标消失而重新计算碰撞点，需要加上起点等待距离
                 this.dist += this.interLen;

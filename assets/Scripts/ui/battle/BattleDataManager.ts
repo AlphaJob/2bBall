@@ -491,7 +491,7 @@ export class BattleDataManager {
 
     ballRound() {
         while (!this.ldata.balls.empty()) {
-            let ball = this.ldata.balls.pop();
+            let ball:Ball = this.ldata.balls.pop();
             let line = ball.nextCollideLine();
             // 距离最短，移动后发生碰撞才会创建命令
             let cmd = {
@@ -506,7 +506,7 @@ export class BattleDataManager {
 
             // 先将球转向,并将所有球的dist减去第一个球的dist
             let d = ball.restDist();
-            this.ldata.balls.foreach((b) => {
+            this.ldata.balls.foreach((b:Ball) => {
                 b.move(d);
             });
             ball.setCollideFinish();
