@@ -141,6 +141,7 @@ export class BattleConfig {
                                 let lines = Line.makeLines(m.id, m.point, obj, mc.solid);
                                 BattleConfig.config.enemys.push({
                                     id: m.id,
+                                    cid: m.cid,
                                     point: m.point,
                                     grid: m.grid,
                                     hp: mc.hp,
@@ -164,6 +165,7 @@ export class BattleConfig {
         for (let enemy of enemys) {
             let e = {
                 id: enemy.id,
+                cid: enemy.cid,
                 point: Vector.copyPoint(enemy.point),
                 grid: enemy.grid,
                 hp: enemy.hp,

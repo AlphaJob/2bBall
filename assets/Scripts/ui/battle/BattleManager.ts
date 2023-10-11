@@ -6,6 +6,7 @@ import { BattleRenderManager } from "./BattleRenderManager";
 import { Line } from "./items/Line";
 import { Vector } from "./util/Vector";
 import { Help } from "./util/Help";
+import { Handler } from "../../utils/Handler";
 
 export class BattleManager {
     private static _instance: BattleManager = null;
@@ -21,32 +22,15 @@ export class BattleManager {
         return this._battleType;
     }
     private _currentBattleData: any;
-    init() {
-        // hidden("debug-panel");
+    init(onInit: Handler) {
         BattleConfig.loadData(() => {
             this.roles = BattleConfig.config.roles;
-            // if ( this.isRemote) {
-            //     let res = httpPost(uri + "/init_ this", "");
-            //     if (!res || res.code != 0) {
-            //         alert("init game failed!");
-            //         return;
-            //     }
-            //     let ret = initEnemyLines();
-            //      this.startLine = ret.startLine;
-            //      this.enemys = ret.enemys;
-            //      this.lines = ret.lines;
-            //      this.user = res.data;
-            //     initRender( this.lines,  this.status,  this.base,  this.collisions,  this.roles);
-            // } else {
             //逻辑
             BattleDataManager.instance.initLogic(this.base, this.distInterval, this.roles);
             //显示
             BattleRenderManager.instance.initRender(BattleDataManager.instance.ldata.lines, this.status, this.base, this.collisions, this.roles);
-            // }
-
-            BattleRenderManager.instance.draw();
-            // addUIEvents();
-
+            
+            onInit.run();
         });
     }
 

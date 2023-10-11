@@ -1,43 +1,39 @@
-import { _decorator, assetManager, AssetManager, Component, instantiate, log, Node, Prefab } from 'cc';
+import { _decorator, AssetManager, Component, Label, log, Node, UITransform } from 'cc';
 import { GameAssetManager } from './utils/GameAssetManager';
-import { Handler } from './utils/Handler';
-import { BattleManager } from './ui/battle/BattleManager';
+import { GameMainManager } from './utils/GameMainManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameMain')
 export class GameMain extends Component {
+
+    private _loadingInfoLab: Label;
+    private _prograssBarTF: UITransform;
     start() {
-        console.log('GameMain start');
-        GameAssetManager.instance.loadBundle('GameUI').then((bundle:AssetManager.Bundle) => {
-            console.log('GameUI bundle loaded');
-            GameAssetManager.instance.loadBundleAllAsset('GameUI', (finish, total, item) => {
-                console.log('loading……' + Math.floor(100 * finish / total) + '%');
+        GameMainManager.instance.init(this);
+
+        let loadingCom: Node = this.node.getChildByName('start').getChildByName('loadingCom');
+        this._prograssBarTF = loadingCom.getChildByName('loadingbar').getComponent(UITransform);
+        this._loadingInfoLab = loadingCom.getChildByName('loadingInfoLab').getComponent(Label);
+
+        this.loadUI();
+    }
+
+    loadUI() {
+        GameAssetManager.instance.loadBundle('Battle').then((bundle: AssetManager.Bundle) => {
+            GameAssetManager.instance.loadBundleAllAsset('Battle', (finish, total, item) => {
+                total = 1363
+                // log('finish:' + finish + ' total:' + total);
+                this._prograssBarTF.width = 600 * finish / total;
+                this._loadingInfoLab.string = 'loading……' + Math.floor(finish / total * 100)  + '%';
             }, (err, res) => {
-                console.log('GameUI bundle loadDir complete');
                 this.assetLoaded();
             });
         });
     }
 
-    // // 加载资源回调
-    // getBundle(bundlename, resname, cb: Handler) {
-    //     let bundle = assetManager.getBundle(bundlename);
-    //     bundle.load(resname, Prefab, (err, res: Prefab) => {
-    //         if (err) {
-    //         }
-    //         else {
-    //             cb.run();
-    //         }
-    //     });
-    // }
-
-    update(deltaTime: number) {
-        
-    }
     //资源加载完成
     assetLoaded() {
-        BattleManager.instance.init();
+        this.node.getChildByName('start').getChildByName('loadingCom').removeFromParent();
+        GameMainManager.instance.showGamePanel();
     }
 }
-
-

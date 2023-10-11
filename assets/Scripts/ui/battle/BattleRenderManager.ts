@@ -89,13 +89,14 @@ export class BattleRenderManager {
     }
 
     //  gameCanvas = document.getElementById("scene");
-     gameCanvas: HTMLCanvasElement = document.getElementById(
-        "scene"
-    ) as HTMLCanvasElement;
-    gameCtx = this.gameCanvas.getContext("2d");
+    //  gameCanvas: HTMLCanvasElement = document.getElementById(
+    //     "scene"
+    // ) as HTMLCanvasElement;
+    // gameCtx = this.gameCanvas.getContext("2d");
     //  gameCtx = this.gameCanvas.getContext("2d");
+    gameCtx = null;
     draw() {
-        // let gameCtx: any;
+        let gameCtx: any;
         this.gameCtx.clearRect(0, 0, BattleConfig.Canvas.width, BattleConfig.Canvas.height);
 
         this.drawDashLine(this.gameCtx, this.baseLine);

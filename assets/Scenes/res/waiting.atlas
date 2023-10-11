@@ -1,0 +1,13 @@
+
+waiting.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+waiting
+  rotate: false
+  xy: 2, 2
+  size: 79, 95
+  orig: 100, 100
+  offset: 3, 5
+  index: -1
