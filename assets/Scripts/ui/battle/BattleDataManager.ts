@@ -137,6 +137,7 @@ export class BattleDataManager {
             enemy.rect.top -= yoffset;
             enemy.rect.bottom -= yoffset;
             enemy.grid -= ret.startLine * BattleConfig.Board.WIDTH;
+            enemy.yoffset = yoffset;
 
             if (enemy.rect.top < BattleConfig.EnemyRect.top || enemy.rect.bottom > BattleConfig.EnemyRect.bottom) {
                 enemy.visible = false;

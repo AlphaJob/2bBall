@@ -96,6 +96,7 @@ export class BattleRenderManager {
     //  gameCtx = this.gameCanvas.getContext("2d");
     gameCtx = null;
     draw() {
+        return;
         let gameCtx: any;
         this.gameCtx.clearRect(0, 0, BattleConfig.Canvas.width, BattleConfig.Canvas.height);
 

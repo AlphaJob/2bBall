@@ -5,27 +5,27 @@ import { Collide } from "../util/Collide";
 import { Vector } from "../util/Vector";
 
 export class Ball {
-    uiBall:UiBall = null;
+    uiBall: UiBall = null;
     id;
-    private x;
-    private y;
+    x;
+    y;
     dir;
-    private role;
+    role;
 
-    private collide;
-    private finish;
-    private dist;
-    private passed;
-    private times;
-    private ctimes;
-    private ignores;
-    private hit;
-    private oldState;
-    private interLen;
+    collide;
+    finish;
+    dist;
+    passed;
+    times;
+    ctimes;
+    ignores;
+    hit;
+    oldState;
+    interLen;
 
-    private color;
-    private radius;
-    private status: BallStatus;
+    color;
+    radius;
+    status: BallStatus;
     constructor({ id, x, y, dir, dist, collide = null, role = null, color = 0, interLen = 0 }) {
         this.id = id;
         this.x = x;

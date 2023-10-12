@@ -95,6 +95,24 @@ export class BattleConfig {
         stage: null
     }
 
+    // 传入显示坐标，获得逻辑坐标
+    static lx(x) {
+        return x;
+    }
+
+    static ly(y) {
+        return -y;
+    }
+
+    // 传入逻辑坐标，获得显示坐标
+    static rx(x) {
+        return x;
+    }
+
+    static ry(y) {
+        return -y;
+    }
+
     static getMonster(cid) {
         for (let m of BattleConfig.config.monsters) {
             if (m.id == cid) {

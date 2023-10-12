@@ -44,7 +44,7 @@ export class BattleManager {
     speedAdd = 0;
     running = null;
     totalDist = 0;
-    time = 50;
+    times = 50;
     roles = [];
     distInterval = 15;
     lastDist = 0;
@@ -141,7 +141,7 @@ export class BattleManager {
         this.pushed = 0;
         BattleRenderManager.instance.balls.length = 0;
         clearInterval(this.timer);
-        this.timer = setInterval(this.updatePush, 50);
+        this.timer = setInterval(()=>{this.updatePush()}, 50);
     }
 
     updateSkillEffect(effects) {
@@ -436,7 +436,7 @@ export class BattleManager {
 
         this.speed += this.speedAdd;
 
-        BattleRenderManager.instance.draw();
+        // BattleRenderManager.instance.draw();
     }
 
     inRange(line) {
@@ -544,7 +544,7 @@ export class BattleManager {
             }
             this.loadBalls();
             //console.log("ball cmds:" + objToString(this.cmds));
-            this.timer = setInterval(this.update, 10);
+            this.timer = setInterval(()=>{this.update()}, 10);
         }
     }
 }
