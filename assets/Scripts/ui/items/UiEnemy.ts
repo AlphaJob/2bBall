@@ -1,10 +1,9 @@
 import { _decorator, Component, Node } from 'cc';
-import { Ball } from '../battle/items/Ball';
 const { ccclass, property } = _decorator;
 
-@ccclass('UiBall')
-export class UiBall extends Component {
-    ball:Ball = null;
+@ccclass('UiEnemy')
+export class UiEnemy extends Component {
+    data:any = null;
     start() {
 
     }

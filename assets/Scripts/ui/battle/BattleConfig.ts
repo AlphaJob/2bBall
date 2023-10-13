@@ -128,7 +128,6 @@ export class BattleConfig {
             console.log('loading……' + Math.floor(100 * finish / total) + '%');
         }, (err, res) => {
             console.log('GameUI bundle loadDir complete');
-
             GameAssetManager.instance.getBundleAsset('resources', 'config/object').then((res: JsonAsset) => {
                 BattleConfig.config.objects = res.json;
                 for (let k in BattleConfig.config.objects) {
@@ -137,10 +136,8 @@ export class BattleConfig {
                 }
                 GameAssetManager.instance.getBundleAsset('resources', 'config/monster').then((res: JsonAsset) => {
                     BattleConfig.config.monsters = res.json;
-
                     GameAssetManager.instance.getBundleAsset('resources', 'config/role').then((res: JsonAsset) => {
                         BattleConfig.config.roles = res.json;
-
                         GameAssetManager.instance.getBundleAsset('resources', 'config/stage').then((res: JsonAsset) => {
                             BattleConfig.config.stage = res.json;
                             BattleConfig.config.stage_monsters = {}
